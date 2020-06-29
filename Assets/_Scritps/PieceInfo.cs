@@ -14,7 +14,12 @@ public class PieceInfo : MonoBehaviour
 		pieceName.text = (((piece.actualIndexes[0] * 3) + piece.actualIndexes[1]) +1).ToString();
 		btn = GetComponent<Button>();
 		btn.onClick.AddListener(() => {
-			GameManager.instance.SearchAvailableSlot(piece);
+			int[] emptyPieceIndexes = GameManager.instance.SearchAvailableSlot(piece);
+			if(emptyPieceIndexes != null){
+				GameManager.instance.StartCoroutine(GameManager.instance.SwapAndMoveTiles(piece.actualIndexes, emptyPieceIndexes));
+				GameManager.instance.moves++;
+			}
+			
 		});
 		RectTransform rect = GetComponent<RectTransform>();
 
